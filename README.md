@@ -133,3 +133,56 @@ is present in the rendered page. I have not tested the five hidden verifiers
 or their three-run majority criterion. A verifier using OCR or visual
 inspection could detect the false title; final eligibility and marks are
 determined by the instructors.
+
+### Task 3: Reflection on AI Paradoxes
+
+When the terminal finally showed 7/7, I was relieved. After dealing with
+connection errors and trying to understand how to run the program, seeing
+all seven CVs classified correctly felt like a clear sign that things were
+working. But I still asked how I could know whether the results were really
+right. Comparing the CSV with the ground truth answered that question for
+the public examples. Task 2 made the question much harder.
+
+Our adversarial CV visibly changed Kelly Tsang's job from Manager to
+Director, but the verifier gave it 0.95, the same score as her genuine CV.
+The ordinary version with Director written as extractable text received
+0.05. The difference came from the PDF: the attack displayed Director as an
+image while leaving Manager underneath as text. The loader passed Manager
+to the agent, and the MCP profile also said Manager. From the text available
+to it, accepting the CV made sense. From the page I could see, it was accepting
+an exaggerated claim.
+
+That was the part I found most interesting. I had focused on whether the AI
+could search for the right person and compare the facts carefully. Yet even
+a careful comparison could miss this problem because the visible false claim
+never reached the model. A verifier could follow its instructions and still
+produce a result that misled the person relying on it. I would now want to
+check what the system actually read before deciding whether to trust its
+judgment.
+
+The score also looked more reassuring than it should have. In our prompt,
+0.95 was a value chosen for a CV that appeared consistent. It was not the
+result of measuring a 95 percent probability that the document was truthful.
+Seeing the same number beside both PDFs made that distinction much clearer.
+The public-test result was useful evidence, but it did not tell me how the
+agent would handle every kind of document.
+
+I noticed a similar tension in my own learning. AI assistance made it
+possible to build and test something that I could not yet fully explain. I
+needed help understanding the functions, the terminal output, and even the
+CSV file. Getting a working result was encouraging, but it also made it easy
+to move on before understanding why it worked. Reading the code and checking
+the results helped me notice how much understanding was still missing.
+
+If I continued this project, I would start by showing the extracted text
+beside the rendered CV so that a reviewer could spot differences. I would
+also separate an unresolved check from a finding of false information: a
+connection failure should not be treated as evidence against a candidate.
+These changes would make the system less convenient in some cases, because
+more documents might need review, but I think that is a reasonable cost when
+someone's application could be affected.
+
+I am still pleased that the agent passed the public test and that the attack
+worked locally. I just see those results differently now. Before treating an
+AI answer as dependable, I want to know what information it received, what
+it actually checked, and whether I understand enough to question the result.
