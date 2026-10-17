@@ -107,7 +107,29 @@ own retry and error handling, with an uncertain fallback score of 0.5 if
 verification still fails. The latest full run of the revised implementation
 classified all 7 public-test CVs correctly (7/7): CVs 1, 2, 3, and 6 scored
 0.95, and CVs 4, 5, and 7 scored 0.05. This result covers the public test;
-performance on unseen CVs has not been measured.
+performance on unseen CVs has not been measured. A fresh clone with a newly
+created virtual environment and reinstalled dependencies also scored 7/7.
 
 ### Task 2
-> the attack techniques you used and why you expect them to work.
+
+I queried Kelly Tsang's LinkedIn and Facebook profiles (ID 10001) and confirmed
+that her current role is Manager at AIA, starting in 2022. My one-page
+`task2/adversarial_cv.pdf` visibly promotes this role to **Director**, while
+retaining the other factual claims. It exploits a mismatch between the PDF's
+rendered appearance and its extracted text: an image displays "Director, AIA"
+over the underlying PDF text "Manager, AIA". The homework's unmodified
+MarkItDown loader extracts the underlying Manager title and does not extract
+the title in the image. A verifier receiving only that text therefore sees a
+CV consistent with the MCP profile.
+
+In one local test using my unchanged Task 1 agent, the original CV scored
+0.95, a control CV with an ordinary extractable Director title scored 0.05,
+and the adversarial PDF scored 0.95. A separate end-to-end run with
+`python hw2.py --cv-folder task2` again scored both the original and adversarial
+CVs at 0.95. This comparison supports the extraction mismatch as the mechanism.
+The assignment explicitly permits techniques inside the PDF and lists hidden
+text and PDF text extraction as possible approaches; the false Director claim
+is present in the rendered page. I have not tested the five hidden verifiers
+or their three-run majority criterion. A verifier using OCR or visual
+inspection could detect the false title; final eligibility and marks are
+determined by the instructors.
