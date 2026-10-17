@@ -93,7 +93,21 @@ attack the MCP server. See the homework description for the full rules.
 > to students: this is your report, see the homework description.
 
 ### Task 1
-> one paragraph describing your solution, and your results on `public_test`.
+
+I built a LangChain agent using the required `deepseek-v4-flash` model and the
+SocialGraph MCP tools. For each CV, it searches for the candidate, checks the
+identity against location and background details, retrieves the LinkedIn
+profile, and compares the CV's name, city, jobs, education, and listed skills.
+It treats equivalent wording as a match, but gives a low score when even one
+material claim differs. The CV and tool results are treated as data rather than
+instructions. One CV runs at a time, and a shared lock also serializes actual
+MCP tool calls when the model requests several tools at once. Read-only tool
+calls retry transient connection failures individually; each CV also has its
+own retry and error handling, with an uncertain fallback score of 0.5 if
+verification still fails. The latest full run of the revised implementation
+classified all 7 public-test CVs correctly (7/7): CVs 1, 2, 3, and 6 scored
+0.95, and CVs 4, 5, and 7 scored 0.05. This result covers the public test;
+performance on unseen CVs has not been measured.
 
 ### Task 2
 > the attack techniques you used and why you expect them to work.
